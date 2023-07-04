@@ -460,4 +460,247 @@ CREATE TABLE "Feedback" (
 );
 
 
+--Explosion table
+CREATE TABLE Address_Person (
+  Per_email VARCHAR(255) NOT NULL, 
+  A_ID INT NOT NULL,
+  PRIMARY KEY (Per_email, A_ID),
+  FOREIGN KEY (Per_email) REFERENCES Person(Per_email),
+  FOREIGN KEY (A_ID) REFERENCES Address(A_ID)
+);
+
+CREATE TABLE Customer_Product (
+  Cust_ID INT NOT NULL,
+  P_ID INT NOT NULL,
+  PRIMARY KEY (Cust_ID, P_ID),
+  FOREIGN KEY (Cust_ID) REFERENCES Customer(Cust_ID),
+  FOREIGN KEY (P_ID) REFERENCES Product(P_ID)
+);
+
+CREATE TABLE Customer_Sale (
+  Cust_ID INT NOT NULL,
+  P_ID INT NOT NULL,
+  PRIMARY KEY (Cust_ID, P_ID),
+  FOREIGN KEY (Cust_ID) REFERENCES Customer(Cust_ID),
+  FOREIGN KEY (P_ID) REFERENCES Product(P_ID)
+);
+
+CREATE TABLE Product_Sale (
+  P_ID INT NOT NULL,
+  Sale_ID INT NOT NULL,
+  PRIMARY KEY (P_ID, Sale_ID),
+  FOREIGN KEY (P_ID) REFERENCES Product(P_ID),
+  FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID)
+);
+
+CREATE TABLE Employee_Supplier (
+  E_ID INT NOT NULL,
+  S_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, S_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID)
+);
+
+CREATE TABLE Employee_Vehicle (
+  E_ID INT NOT NULL,
+  Vec_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, Vec_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (Vec_ID) REFERENCES Vehicle(Vec_ID)
+);
+
+CREATE TABLE Employee_Item (
+  E_ID INT NOT NULL,
+  Itm_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, Itm_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (Itm_ID) REFERENCES Item(Itm_ID)
+);
+
+CREATE TABLE Employee_Product (
+  E_ID INT NOT NULL,
+  P_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, P_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (P_ID) REFERENCES Product(P_ID)
+);
+
+CREATE TABLE Employee_MarketingProgram (
+  E_ID INT NOT NULL,
+  Mrkt_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, Mrkt_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (Mrkt_ID) REFERENCES MarketingProgram(Mrkt_ID)
+);
+
+CREATE TABLE Employee_Recipe (
+  E_ID INT NOT NULL,
+  R_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, R_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (R_ID) REFERENCES Recipe(R_ID)
+);
+
+CREATE TABLE Employee_Training (
+  E_ID INT NOT NULL,
+  Training_ID INT NOT NULL,
+  PRIMARY KEY (E_ID, Training_ID),
+  FOREIGN KEY (E_ID) REFERENCES Employee(E_ID),
+  FOREIGN KEY (Training_ID) REFERENCES Training(Training_ID)
+);
+
+CREATE TABLE Department_Branch (
+  Dpt_ID INT NOT NULL,
+  B_ID INT NOT NULL,
+  PRIMARY KEY (Dpt_ID, B_ID),
+  FOREIGN KEY (Dpt_ID) REFERENCES Department(Dpt_ID),
+  FOREIGN KEY (B_ID) REFERENCES Branch(B_ID)
+);
+
+CREATE TABLE Promotion_Branch (
+  Promo_ID INT NOT NULL,
+  B_ID INT NOT NULL,
+  PRIMARY KEY (Promo_ID, B_ID),
+  FOREIGN KEY (Promo_ID) REFERENCES Promotion(Promo_ID),
+  FOREIGN KEY (B_ID) REFERENCES Branch(B_ID)
+);
+
+CREATE TABLE MarketingProgram_Branch (
+  Mrkt_ID INT NOT NULL,
+  B_ID INT NOT NULL,
+  PRIMARY KEY (Mrkt_ID, B_ID),
+  FOREIGN KEY (Mrkt_ID) REFERENCES MarketingProgram(Mrkt_ID),
+  FOREIGN KEY (B_ID) REFERENCES Branch(B_ID)
+);
+
+CREATE TABLE Promotion_Product (
+  Promo_ID INT NOT NULL,
+  P_ID INT NOT NULL,
+  PRIMARY KEY (Promo_ID, P_ID),
+  FOREIGN KEY (Promo_ID) REFERENCES Promotion(Promo_ID),
+  FOREIGN KEY (P_ID) REFERENCES Product(P_ID)
+);
+
+CREATE TABLE Vehicle_Transaction (
+  Vec_ID INT NOT NULL,
+  Trans_refnum INT NOT NULL,
+  PRIMARY KEY (Vec_ID, Trans_refnum),
+  FOREIGN KEY (Vec_ID) REFERENCES Vehicle(Vec_ID),
+  FOREIGN KEY (Trans_refnum) REFERENCES "Transaction"(Trans_refnum)
+);
+
+CREATE TABLE RawMaterial_Recipe (
+  R_ID INT NOT NULL,
+  RM_ID INT NOT NULL,
+  PRIMARY KEY (R_ID, RM_ID),
+  FOREIGN KEY (R_ID) REFERENCES Recipe(R_ID),
+  FOREIGN KEY (RM_ID) REFERENCES RawMaterial(RM_ID)
+);
+
+CREATE TABLE Inventory_Supplier (
+  I_ID INT NOT NULL,
+  S_ID INT NOT NULL,
+  PRIMARY KEY (I_ID, S_ID),
+  FOREIGN KEY (I_ID) REFERENCES Inventory(I_ID),
+  FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID)
+);
+
+CREATE TABLE Inventory_Shipment (
+  I_ID INT NOT NULL,
+  Ship_ID INT NOT NULL,
+  PRIMARY KEY (I_ID, Ship_ID),
+  FOREIGN KEY (I_ID) REFERENCES Inventory(I_ID),
+  FOREIGN KEY (Ship_ID) REFERENCES Shipment(Ship_ID)
+);
+
+CREATE TABLE Inventory_Vehicle (
+  I_ID INT NOT NULL,
+  Vec_ID INT NOT NULL,
+  PRIMARY KEY (I_ID, Vec_ID),
+  FOREIGN KEY (I_ID) REFERENCES Inventory(I_ID),
+  FOREIGN KEY (Vec_ID) REFERENCES Vehicle(Vec_ID)
+);
+
+CREATE TABLE Delivery_Item (
+  Dlvr_ID INT NOT NULL,
+  Itm_ID INT NOT NULL,
+  PRIMARY KEY (Dlvr_ID, Itm_ID),
+  FOREIGN KEY (Dlvr_ID) REFERENCES Delivery(Dlvr_ID),
+  FOREIGN KEY (Itm_ID) REFERENCES Item(Itm_ID)
+);
+
+CREATE TABLE Inventory_Sale (
+  I_ID INT NOT NULL,
+  Sale_ID INT NOT NULL,
+  PRIMARY KEY (I_ID, Sale_ID),
+  FOREIGN KEY (I_ID) REFERENCES Inventory(I_ID),
+  FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID)
+);
+
+CREATE TABLE Item_Transaction (
+  Itm_ID INT NOT NULL,
+  Trans_refnum INT NOT NULL,
+  PRIMARY KEY (Itm_ID, Trans_refnum),
+  FOREIGN KEY (Itm_ID) REFERENCES Item(Itm_ID),
+  FOREIGN KEY (Trans_refnum) REFERENCES "Transaction"(Trans_refnum)
+);
+
+CREATE TABLE Address_Branch (
+  A_ID INT NOT NULL,
+  B_ID INT NOT NULL,
+  PRIMARY KEY (A_ID, B_ID),
+  FOREIGN KEY (A_ID) REFERENCES Address(A_ID),
+  FOREIGN KEY (B_ID) REFERENCES Branch(B_ID)
+);
+
+CREATE TABLE Address_Supplier (
+  A_ID INT NOT NULL,
+  S_ID INT NOT NULL,
+  PRIMARY KEY (A_ID, S_ID),
+  FOREIGN KEY (A_ID) REFERENCES Address(A_ID),
+  FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID)
+);
+
+CREATE TABLE Address_Inventory (
+  A_ID INT NOT NULL,
+  I_ID INT NOT NULL,
+  PRIMARY KEY (A_ID, I_ID),
+  FOREIGN KEY (A_ID) REFERENCES Address(A_ID),
+  FOREIGN KEY (I_ID) REFERENCES Inventory(I_ID)
+);
+
+CREATE TABLE Applicant_Application (
+  Applicant_ID INT NOT NULL,
+  Application_ID INT NOT NULL,
+  PRIMARY KEY (Applicant_ID, Application_ID),
+  FOREIGN KEY (Applicant_ID) REFERENCES Applicant(Applicant_ID),
+  FOREIGN KEY (Application_ID) REFERENCES Application(Application_ID)
+);
+
+CREATE TABLE Delivery_Transaction (
+  Dlvr_ID INT NOT NULL,
+  Trans_refnum INT NOT NULL,
+  PRIMARY KEY (Dlvr_ID, Trans_refnum),
+  FOREIGN KEY (Dlvr_ID) REFERENCES Delivery(Dlvr_ID),
+  FOREIGN KEY (Trans_refnum) REFERENCES "Transaction"(Trans_refnum)
+);
+
+CREATE TABLE MarketingProgram_Sale (
+  Mrkt_ID INT NOT NULL,
+  Sale_ID INT NOT NULL,
+  PRIMARY KEY (Mrkt_ID, Sale_ID),
+  FOREIGN KEY (Mrkt_ID) REFERENCES MarketingProgram(Mrkt_ID),
+  FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID)
+);
+
+CREATE TABLE Transaction_Shipment (
+  Trans_refnum INT NOT NULL,
+  Ship_ID INT NOT NULL,
+  PRIMARY KEY (Trans_refnum, Ship_ID),
+  FOREIGN KEY (Trans_refnum) REFERENCES "Transaction"(Trans_refnum),
+  FOREIGN KEY (Ship_ID) REFERENCES Shipment(Ship_ID)
+);
+
+
+
 --insert data code 
