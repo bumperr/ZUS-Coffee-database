@@ -294,7 +294,7 @@ CREATE TABLE Recipe (
   R_instruction VARCHAR2(1000),
   R_PrepTime NUMBER,
   R_CookTime NUMBER,
-  R_ServingSize NUMBER,
+  R_ServingSize VARCHAR2(50),
   R_tools VARCHAR2(255),
   R_remarks VARCHAR2(255),
   R_dateCreated DATE
@@ -304,13 +304,13 @@ CREATE TABLE Product (
   Itm_ID INT,
   P_rating NUMBER,
   P_category VARCHAR2(100),
-  P_weight NUMBER,
+  P_weight VARCHAR2(20),
   P_retailPrice NUMBER,
   P_nutritionInfo VARCHAR2(255),
-  P_availability VARCHAR2(50),
+  P_availability CHAR(1),
   P_description VARCHAR2(255),
   P_allergenInfo VARCHAR2(255),
-  P_shelfLife NUMBER,
+  P_shelfLife VARCHAR2(100),
   R_ID INT,
   CONSTRAINT fk_P_Item FOREIGN KEY (Itm_ID) REFERENCES Item (Itm_ID),
   CONSTRAINT fk_P_Recipe FOREIGN KEY (R_ID) REFERENCES Recipe (R_ID)
@@ -360,7 +360,7 @@ CREATE TABLE Promotion (
   promo_TandC VARCHAR2(255),
   promo_startDate DATE,
   promo_endDate DATE,
-  promo_status VARCHAR2(50),
+  promo_status VARCHAR2(100),
   promo_redemptionLimit INT,
   Cust_ID INT,
   Dpt_ID INT,
@@ -393,28 +393,6 @@ CREATE TABLE "Transaction" (
   CONSTRAINT fk_Trans_Supplier FOREIGN KEY (S_ID) REFERENCES Supplier (S_ID)
 );
 
-CREATE TABLE Delivery (
-  Dlvr_ID INT PRIMARY KEY,
-  Dlvr_date DATE,
-  Dlvr_time TIMESTAMP,
-  Dlvr_method VARCHAR2(50),
-  Dlvr_eta DATE,
-  Dlvr_notes VARCHAR2(255),
-  Dlvr_packagingdetails VARCHAR2(255),
-  Dlvr_dimensions VARCHAR2(100),
-  Dlvr_details VARCHAR2(255),
-  Dlvr_contact VARCHAR2(100),
-  A_ID INT,
-  Cust_ID INT,
-  Vec_ID INT,
-  B_ID INT,
-  CONSTRAINT fk_Dlvr_Address FOREIGN KEY (A_ID) REFERENCES Address (A_ID),
-  CONSTRAINT fk_Dlvr_Customer FOREIGN KEY (Cust_ID) REFERENCES Customer (Cust_ID),
-  CONSTRAINT fk_Dlvr_Vehicle FOREIGN KEY (Vec_ID) REFERENCES Vehicle (Vec_ID),
-  CONSTRAINT fk_Dlvr_Branch FOREIGN KEY (B_ID) REFERENCES Branch (B_ID)
-);
-
-
 CREATE TABLE Sale (
   Sale_ID INT NOT NULL PRIMARY KEY,
   Sale_date DATE,
@@ -426,15 +404,36 @@ CREATE TABLE Sale (
   Sale_totalAmount NUMBER,
   Sale_status VARCHAR2(50),
   Sale_quantity INT,
-  Dlvr_ID INT,
   B_ID INT,
-  Trans_refnum INT,
   Promo_ID INT,
-  CONSTRAINT fk_Sale_Delivery FOREIGN KEY (Dlvr_ID) REFERENCES Delivery (Dlvr_ID),
   CONSTRAINT fk_Sale_Branch FOREIGN KEY (B_ID) REFERENCES Branch (B_ID),
-  CONSTRAINT fk_Sale_Transaction FOREIGN KEY (Trans_refnum) REFERENCES "Transaction" (Trans_refnum),
   CONSTRAINT fk_Sale_Promotion FOREIGN KEY (Promo_ID) REFERENCES Promotion (Promo_ID)
 );
+
+CREATE TABLE Delivery (
+  Dlvr_ID INT PRIMARY KEY,
+  Dlvr_date DATE,
+  Dlvr_time TIMESTAMP,
+  Dlvr_method VARCHAR2(50),
+  Dlvr_eta TIMESTAMP,
+  Dlvr_notes VARCHAR2(255),
+  Dlvr_packagingdetails VARCHAR2(255),
+  Dlvr_dimensions VARCHAR2(100),
+  Dlvr_details VARCHAR2(255),
+  Dlvr_contact VARCHAR2(100),
+  A_ID INT,
+  Cust_ID INT,
+  Vec_ID INT,
+  B_ID INT,
+  Sale_ID INT,
+  CONSTRAINT fk_Dlvr_Address FOREIGN KEY (A_ID) REFERENCES Address (A_ID),
+  CONSTRAINT fk_Dlvr_Customer FOREIGN KEY (Cust_ID) REFERENCES Customer (Cust_ID),
+  CONSTRAINT fk_Dlvr_Vehicle FOREIGN KEY (Vec_ID) REFERENCES Vehicle (Vec_ID),
+  CONSTRAINT fk_Dlvr_Branch FOREIGN KEY (B_ID) REFERENCES Branch (B_ID)
+);
+
+
+
 
 CREATE TABLE "Feedback" (
   Fdbk_ID INT NOT NULL PRIMARY KEY,
@@ -463,6 +462,9 @@ CREATE TABLE "Feedback" (
 
 ALTER TABLE "Transaction"
 ADD CONSTRAINT fk_Trans_Sale FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID);
+
+ALTER TABLE Delivery
+ADD CONSTRAINT fk_Dlvr_Sale FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID);
 
 --Explosion table
 CREATE TABLE Address_Person (
@@ -704,6 +706,15 @@ CREATE TABLE Transaction_Shipment (
   FOREIGN KEY (Trans_refnum) REFERENCES "Transaction"(Trans_refnum),
   FOREIGN KEY (Ship_ID) REFERENCES Shipment(Ship_ID)
 );
+
+CREATE TABLE Procurement_Supplier (
+  Proc_ID INT NOT NULL,
+  S_ID INT NOT NULL,
+  PRIMARY KEY (Proc_ID, S_ID),
+  FOREIGN KEY (Proc_ID) REFERENCES Procurement(Proc_ID),
+  FOREIGN KEY (S_ID) REFERENCES Supplier(S_ID)
+);
+
 
 
 --insert data code 
@@ -989,3 +1000,156 @@ INSERT ALL
     INTO Shipment VALUES (9, TO_DATE('5/20/2023', 'MM/DD/YYYY'), TO_DATE('6/1/2023', 'MM/DD/YYYY'), 'Express Courier', 'SD135590064047', 'Completed', 'Food', 'TA-Q-BIN', 'Ipoh, Perak', 'Parit Buntar, Perak', 'Temperature-sensitive shipment - maintain between 15-25 degrees Celsius.', 28, TO_DATE('6/1/2023', 'MM/DD/YYYY'), '915.35 in³', 56, 28, 9, 9, 9, 9)
     INTO Shipment VALUES (10, TO_DATE('6/2/2023', 'MM/DD/YYYY'), TO_DATE('6/2/2023', 'MM/DD/YYYY'), 'Sea Freight', 'QW75820010016', 'Shipping', 'Fragile', 'Citylink', 'Kuching, Sarawak', 'Plaza 333, Sabah', 'Fragile contents - handle with care.', 29, TO_DATE('6/6/2023', 'MM/DD/YYYY'), '2812.85 in³', 130, 29, 10, 10, 10, 10)
 SELECT * FROM DUAL;
+
+
+
+--start repair from here 
+
+INSERT ALL
+    INTO Item VALUES (1, 13, TO_DATE('05/09/23', 'MM/DD/YY'), 'Coffee beans (different varieties)', 1, 1, 1, 1)
+    INTO Item VALUES (2, 50, TO_DATE('07/15/23', 'MM/DD/YY'), 'Berylls Chocolate bar', 2, 2, 2, 2)
+    INTO Item VALUES (3, 200, TO_DATE('03/28/23', 'MM/DD/YY'), 'Saji Flour', 3, 3, 3, 3)
+    INTO Item VALUES (4, 40, TO_DATE('10/06/23', 'MM/DD/YY'), 'Sweeteners (sugar, honey, syrup)', 4, 4, 4, 4)
+    INTO Item VALUES (5, 60, TO_DATE('01/21/23', 'MM/DD/YY'), 'FarmFresh Milk', 5, 5, 5, 5)
+    INTO Item VALUES (6, 20, TO_DATE('09/13/23', 'MM/DD/YY'), 'Nutripluss Eggs', 6, 6, 6, 6)
+    INTO Item VALUES (7, 800, TO_DATE('04/02/23', 'MM/DD/YY'), 'Nelson-Masssey vanilla', 7, 7, 7, 7)
+    INTO Item VALUES (8, 140, TO_DATE('11/18/23', 'MM/DD/YY'), 'Anchr salted butter', 8, 8, 8, 8)
+    INTO Item VALUES (9, 70, TO_DATE('06/30/23', 'MM/DD/YY'), 'Master cocoa powder', 9, 9, 9, 9)
+    INTO Item VALUES (10, 35, TO_DATE('12/25/23', 'MM/DD/YY'), 'Tatura Cheese', 10, 10, 10, 10)
+    INTO Item VALUES (11, 76, TO_DATE('07/01/23', 'MM/DD/YY'), 'Lemonade', 3, 3, 9, 9)
+    INTO Item VALUES (12, 84, TO_DATE('02/14/23', 'MM/DD/YY'), 'Hot tea', 5, 4, 7, 4)
+    INTO Item VALUES (13, 92, TO_DATE('03/22/23', 'MM/DD/YY'), 'Zuss Chocolate Frappe', 7, 7, 1, 1)
+    INTO Item VALUES (14, 63, TO_DATE('04/01/23', 'MM/DD/YY'), 'Zuss Iced Americano', 2, 1, 3, 6)
+    INTO Item VALUES (15, 75, TO_DATE('05/19/23', 'MM/DD/YY'), 'Zuss Hot Latte', 10, 4, 5, 8)
+    INTO Item VALUES (16, 98, TO_DATE('06/08/23', 'MM/DD/YY'), 'Zuss Cheese Croissant', 5, 6, 3, 3)
+    INTO Item VALUES (17, 56, TO_DATE('07/02/23', 'MM/DD/YY'), 'Berries cheese cake', 1, 2, 2, 6)
+    INTO Item VALUES (18, 85, TO_DATE('08/16/23', 'MM/DD/YY'), 'Burnt Coffee cake', 4, 10, 8, 4)
+    INTO Item VALUES (19, 67, TO_DATE('10/09/23', 'MM/DD/YY'), 'ZUSS Steel Straw', 6, 2, 3, 2)
+    INTO Item VALUES (20, 91, TO_DATE('10/28/23', 'MM/DD/YY'), 'Burnt Cheese Cake', 8, 5, 9, 5)
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO Recipe VALUES (1, 'Pink Lemonade', 'lemon, lychee, soda water', 'Mix soda water with a liquid base (such as flavor syrups) until blend it well.', 6, 0, 'large cup', 'Kitchen utensils', 'Measure the flavor syrup accurately', TO_DATE('06/15/2020', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (2, 'Hot Green Tea Latte', 'milk, green tea', 'Mix hot water with the mixture of green tea and add on milk.', 8, 0, 'medium cup', 'Green tea mixer, Espresso machine', 'Can change milk based', TO_DATE('07/10/2021', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (3, 'Caramel Cream Frappe', 'milk, caramel syrup', 'Pour into a cup and top with whipped cream or other garnishes if desired.', 12, 0, 'large cup', 'Blender', 'Add on caramel drizzle', TO_DATE('12/29/2022', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (4, 'Iced Americano', 'espresso', 'Brew coffee using your preferred method and let it cool.', 4, 0, 'medium cup', 'Coffee grinder, Espresso machine', 'No syrup', TO_DATE('09/02/2019', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (5, 'Hot Cappuccino', 'milk, espresso', 'Add milk, cream, or sweeteners as desired.', 4, 0, 'large cup', 'Coffee grinder, Espresso machine', NULL, TO_DATE('09/03/2019', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (6, 'Chicken Curry Puff', 'chicken', 'Preheat the oven to the recommended temperature.', 2, 45, '1 piece', 'Kitchen utensils, Stove, Mixer, Microwave', 'Prepare utensils for customer', TO_DATE('09/04/2019', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (7, 'Summer Berries Cheese Cake', 'egg', 'Let the cake cool before frosting or serving.', 2, 72, '1 slice', 'Kitchen utensils, Mixer, Chiller', 'Use a clean plate', TO_DATE('01/08/2022', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (8, 'Iced Buttercreme Latte', 'milk', 'Add flavored syrups, such as caramel or vanilla, to the espresso.', 12, 45, 'large cup', 'Coffee grinder, Espresso machine, Mixer, Blender', NULL, TO_DATE('04/03/2023', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (9, 'Iced Velvet Crème Mocha', 'espresso, milk, caramel syrup', 'Heat milk on the stovetop or using a steam wand until hot but not boiling.', 10, 45, 'large cup', 'Coffee grinder, Espresso machine, Mixer, Blender', NULL, TO_DATE('04/03/2023', 'MM/DD/YYYY'))
+    INTO Recipe VALUES (10, 'Classic Mac & Cheese', 'macaroni, cheese, chicken', 'Cook the mac & cheese gravy on the pan until fully cooked.', 12, 15, '1 plate', 'Kitchen utensils, Stove, Microwave', 'Extra gravy', TO_DATE('10/28/2022', 'MM/DD/YYYY'))
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO Product VALUES (1, 11, 8.5, 'Non-coffee', '16oz', 9.90, '61 kcal', 'Y', 'A pink twist on our Signature ZUS Lemonade. Perfect for those who need a bit of bright colors in their life.', 'lemon, lychee, soda water', '2-3 days when stored refrigerated.', 1)
+    INTO Product VALUES (2, 12, 5.6, 'Tea', '12oz', 9.70, '366kcal', 'Y', 'DID YOU KNOW? "Green Tea Latte contains no coffee. Green Tea Latte = Green Tea with Milk."', 'milk, green tea', '1-2 days when stored refrigerated.', 2)
+    INTO Product VALUES (3, 13, 9, 'Zus Frappe', '16oz', 14.90, '376kcal', 'Y', 'FYI: Caramel is made by boiling sugar and it has been a popular sweet treat since the 17th century!', 'milk, caramel syrup', '6-12 months when stored in a cool and dry place.', 3)
+    INTO Product VALUES (4, 14, 7.5, 'Iced Coffee', '12oz', 6.90, '21kcal', 'Y', 'ZUS Blend is a 100% Specialty Grade Arabica hand-crafted blend consisting of Brazil, Papua New Guinea & Indonesia Single Origin Beans.', 'espresso', '1-3 months when stored refrigerated.', 4)
+    INTO Product VALUES (5, 15, 5.5, 'Hot Coffee', '16oz', 9.70, '270kcal', 'Y', 'With lesser milk & more foam, if you like your coffee strong, the Cappuccino is the way to go.', 'milk, espresso', 'Best when consumed immediately after preparation.', 5)
+    INTO Product VALUES (6, 16, 6.4, 'Pastries', '75g', 3.90, '295kcal', 'N', 'The fragrant spices and herbs spice UP your day a little moreeee.', 'chicken', '1-3 days when stored at room temperature in airtight packaging.', 6)
+    INTO Product VALUES (7, 17, 8.5, 'Cakes', '125g', 13.50, '284kcal', 'Y', 'Deck your summer table with one of our light & luscious berries cheesecake!', 'egg', '3-5 days when refrigerated in a covered container.', 7)
+    INTO Product VALUES (8, 18, 7, 'Cakes', '200g', 10.90, '594kcal', 'Y', 'Disclaimer: Contains a small amount of caffeine & dairy ingredients. Kindly consume at your own risk.', 'milk', 'Best when consumed immediately after preparation.', 8)
+    INTO Product VALUES (9, 19, 9, 'Merchandise', '150g', 13.80, null, 'N', 'Steel straw', null, 'wholeLife', null)
+    INTO Product VALUES (10, 20, 4, 'Cakes', '300g', 12.90, '130kcal', 'Y', 'Creamy burnt cheesecakes for sweet tooth', 'cheese', '1-3 days when refrigerated and reheated properly before consumption.', 10)
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO RawMaterial VALUES (1, 1, 'Grade A', 'Arabica Coffee', 'kg', 10, 'Premium Arabica Coffee Beans', 'Cool, dry place', 5, 100, 'Kapal Api',1)
+    INTO RawMaterial VALUES (2, 2, 'Premium', 'Chocolate', 'kg', 5, 'Dark Chocolate', 'Cool, dry place', 2, 50, 'Beryl''s',2)
+    INTO RawMaterial VALUES (3, 3, 'Grade B', 'Flour', 'kg', 20, 'All-Purpose Flour', 'Dry, airtight container', 10, 200, 'Massimo',3)
+    INTO RawMaterial VALUES (4, 4, 'Extra Fine', 'Sugar', 'kg', 15, 'Cane Sugar', 'Dry, airtight container', 5, 100, 'Gula Prai',4)
+    INTO RawMaterial VALUES (5, 5, 'Organic', 'Milk', 'liter', 10, 'Fresh Whole Milk', 'Refrigerated', 2, 20, 'Farm Fresh',5)
+    INTO RawMaterial VALUES (6, 6, 'Grade A', 'Eggs', 'piece', 100, 'Fresh Chicken Eggs', 'Refrigerated', 50, 500, 'Happy Eggs',6)
+    INTO RawMaterial VALUES (7, 7, 'Premium', 'Vanilla Extract', 'ml', 500, 'Pure Vanilla Extract', 'Cool, dark place', 100, 1000, 'Jati',7)
+    INTO RawMaterial VALUES (8, 8, 'Grade A', 'Butter', 'kg', 5, 'Salted Butter', 'Refrigerated', 1, 50, 'Anchor',8)
+    INTO RawMaterial VALUES (9, 9, 'Extra Fine', 'Cocoa Powder', 'kg', 2, 'Dutch Process Cocoa Powder', 'Cool, dry place', 1, 20, 'JB Cocoa',9)
+    INTO RawMaterial VALUES (10, 10, 'Premium', 'Cream Cheese', 'kg', 2, 'Creamy Cheese Spread', 'Refrigerated', 1, 10, 'Emborg',10)
+SELECT * FROm DUAL;
+
+INSERT ALL 
+    INTO MarketingProgram VALUES (1, 'Morning Brew', TO_DATE('07/01/2023', 'MM/DD/YYYY'), TO_DATE('07/31/2023', 'MM/DD/YYYY'), 'Start your day with our delightful coffee blends!', 'Social media, email marketing', 15000, 'Engagement rate, coupon redemptions', 'Morning commuters, office workers', '20% increase in coupon redemptions', 'Promote morning coffee specials and increase customer engagement', 1)
+    INTO MarketingProgram VALUES (2, 'Seasonal Flavors', TO_DATE('09/15/2023', 'MM/DD/YYYY'), TO_DATE('12/31/2023', 'MM/DD/YYYY'), 'Experience the taste of the season with our...', 'In-store displays, social media', 7000, 'Sales, customer feedback', 'Coffee enthusiasts, flavor lovers', '15% increase in sales of seasonal flavors', 'Introduce new seasonal flavors and boost sales during specific periods', 2)
+    INTO MarketingProgram VALUES (3, 'Loyalty Program', TO_DATE('01/01/2023', 'MM/DD/YYYY'), TO_DATE('12/31/2023', 'MM/DD/YYYY'), 'Join our loyalty program and enjoy exclusive...', 'Mobile app notifications, email marketing', 1500, 'Enrollment rate, repeat visits', 'Regular customers, coffee aficionados', '30% increase in loyalty program enrollment', 'Retain and incentivize existing customers through a loyalty program', 3)
+    INTO MarketingProgram VALUES (4, 'Coffee Tasting Event', TO_DATE('06/15/2023', 'MM/DD/YYYY'), TO_DATE('06/16/2023', 'MM/DD/YYYY'), 'Explore a variety of coffee flavors at our...', 'Event marketing, social media', 50000, 'Event attendance, customer feedback', 'Coffee enthusiasts, local community', '200 attendees, positive customer feedback', 'Promote brand awareness and engage coffee lovers through a tasting event', 4)
+    INTO MarketingProgram VALUES (5, 'Happy Hour Specials', TO_DATE('08/01/2023', 'MM/DD/YYYY'), TO_DATE('08/31/2023', 'MM/DD/YYYY'), 'Enjoy discounted prices on your favorite...', 'In-store signage, social media', 82075, 'Sales, customer satisfaction', 'Afternoon and evening customers', '10% increase in sales during happy hour', 'Drive foot traffic during slower hours and increase sales through happy hour promotions', 5)
+    INTO MarketingProgram VALUES (6, 'Community Partnership', TO_DATE('11/01/2023', 'MM/DD/YYYY'), TO_DATE('11/30/2023', 'MM/DD/YYYY'), 'Partnering with the local community for...', 'Community engagement, social media', 4002, 'Brand visibility, community engagement', 'Local community, coffee lovers', 'Increased brand awareness and community engagement', 'Foster positive relationships with the local community', 6)
+    INTO MarketingProgram VALUES (7, 'Social Media Contest', TO_DATE('10/01/2023', 'MM/DD/YYYY'), TO_DATE('10/31/2023', 'MM/DD/YYYY'), 'Participate in our contest and win free coffee!', 'Social media platforms', 3600, 'Engagement rate, participant count', 'Social media followers', '500 contest entries', 'Boost social media presence and engage with customers', 7)
+    INTO MarketingProgram VALUES (8, 'Sustainable Coffee Initiative', TO_DATE('05/15/2023', 'MM/DD/YYYY'), TO_DATE('06/15/2023', 'MM/DD/YYYY'), 'Supporting fair trade and environmentally-friendly practices', 'Community outreach, website', 1500, 'Brand visibility, community engagement', 'Environmentally-conscious consumers', 'Increased awareness of sustainable coffee practices', 'Promote ethical and sustainable coffee sourcing and production', 8 )
+    INTO MarketingProgram VALUES (9, 'Office Coffee Program', TO_DATE('02/01/2023', 'MM/DD/YYYY'), TO_DATE('12/31/2023', 'MM/DD/YYYY'), 'Supplying quality coffee to local offices', 'B2B sales, direct marketing', 12000, 'Client acquisition, satisfaction', 'Local businesses, offices', 'Secured contracts with 10 new offices', 'Provide coffee solutions for local businesses and increase revenue', 9)
+    INTO MarketingProgram VALUES (10, 'Cold Brew Promotion', TO_DATE('07/15/2023', 'MM/DD/YYYY'), TO_DATE('07/31/2023', 'MM/DD/YYYY'), 'Beat the heat with our refreshing cold brew beverages!', 'In-store promotions, social media', 2000, 'Sales, customer feedback', 'Coffee lovers', '25% increase in cold brew sales', 'Drive sales and awareness for cold brew coffee offerings', 10)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Promotion VALUES (1, 'ZUS COFFEE X TNG Ewallet', 'Wake up and taste perfection with Zuss Coffee by using Ewallet', 'Collaboration promo', 'Use TNG Ewallet', 'ZCODE20', 0.5, 'Minimum purchase RM12', TO_DATE('10/06/22', 'MM/DD/YY'), TO_DATE('10/07/22', 'MM/DD/YY'), 'Ongoing', 500000, 1, 1, 1)
+    INTO Promotion VALUES (2, 'VOTE DAY', 'Indulge in the rich flavors of Zuss Coffee on the vote day', 'Special day promo', 'Must voting', 'ZCODE21', 0.3, 'Applicable for pickup via ZUS App only', TO_DATE('03/14/21', 'MM/DD/YY'), TO_DATE('03/15/21', 'MM/DD/YY'), 'Finished', 100000, 2, 2, 2)
+    INTO Promotion VALUES (3, 'ZUS COFFEE WORLD CUP 2022', 'Elevate your coffee game with Zuss', 'Special day promo', 'Vote winners', 'ZCODE22', 0.15, 'Buy any 1 item & get 15% off for the 2nd item', TO_DATE('11/25/23', 'MM/DD/YY'), TO_DATE('11/26/23', 'MM/DD/YY'), 'Finished', 75000, 3, 3, 3)
+    INTO Promotion VALUES (4, 'KENANGAN MERDEKA', 'Remember Merdeka with the smoothness of Zuss Coffee', 'Special day promo', 'Post in Social media', 'ZCODE23', 0.2, 'Applicable for pickup via ZUS App only', TO_DATE('04/08/22', 'MM/DD/YY'), TO_DATE('04/09/22', 'MM/DD/YY'), 'Planning', 200000, 4, 4, 4)
+    INTO Promotion VALUES (5, '40% OFF WITH BonusLink BLINK App', 'Grab your discount with BLINK App', 'Collaboration promo', 'Use BLINK App', 'ZCODE24', 0.1, 'Make a payment using BonusLink App', TO_DATE('01/17/23', 'MM/DD/YY'), TO_DATE('01/18/23', 'MM/DD/YY'), 'Ongoing', 180000, 5, 5, 5)
+    INTO Promotion VALUES (6, 'BUY 1 FREE 1', 'Dont let your chance to experience the art of coffee with Zuss', 'Weekly promo', 'Buy drinks more than RM20', 'ZCODE25', 0.5, 'The lowest-price drink will be free', TO_DATE('08/03/21', 'MM/DD/YY'), TO_DATE('08/04/21', 'MM/DD/YY'), 'On-going', 300000, 6, 6, 6)
+    INTO Promotion VALUES (7, 'BREKKIE COMBO', 'Take your combos now !', 'Special promo', 'Buy more than RM20', 'ZCODE26', 0.4, 'Applicable for delivery & pickup via ZUS App & foodpanda only', TO_DATE('12/29/22', 'MM/DD/YY'), TO_DATE('12/30/22', 'MM/DD/YY'), 'Ongoing', 150000, 7, 7, 7)
+    INTO Promotion VALUES (8, 'RAMADAN SWEET DEAL', 'Start your Ramadan with the sweetness of Zuss Coffee', 'Special day promo', 'Ramadhan mission', 'ZCODE27', 0.15, 'Applicable for selected outlets only', TO_DATE('06/11/23', 'MM/DD/YY'), TO_DATE('06/12/23', 'MM/DD/YY'), 'Finished', 600000, 8, 8, 8)
+    INTO Promotion VALUES (9, 'NEW MEMBER', 'Grab your voucher as the new member of Zuss Coffee now !', 'Special promo', 'Use Zuss Coffee App', 'ZCODE28', 0.2, 'New register for ZUS App', TO_DATE('09/02/21', 'MM/DD/YY'), TO_DATE('09/03/21', 'MM/DD/YY'), 'Ongoing', 450000, 9, 9, 9)
+    INTO Promotion VALUES (10, '11.11 SALE OFFER', 'Get your offer now before it''s too late !', 'Weekly promo', 'Customer Loyalty', 'ZCODE29', 0.1, 'Each user is limited to one(1) time purchase only', TO_DATE('02/21/22', 'MM/DD/YY'), TO_DATE('02/22/22', 'MM/DD/YY'), 'Planning', 190000, 10, 10, 10)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL 
+    INTO Sale VALUES(1, TO_DATE('24/1/2022', 'DD/MM/YYYY'), 'Unlimited', TO_TIMESTAMP('2023-06-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'eWallet user', 6.00, 'Month-wise sale', 10000, 'Completed', 120, 1, 1)
+    INTO Sale VALUES(2, TO_DATE('19/11/2022', 'DD/MM/YYYY'), '1000', TO_TIMESTAMP('2023-07-01 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Malaysian who show their inked finger', 7.25, 'Promotional Campaign sale', 8000, 'InProgress', 80, 2, 2)
+    INTO Sale VALUES(3, TO_DATE('18/12/2022', 'DD/MM/YYYY'), '400', TO_TIMESTAMP('2023-08-10 09:45:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 8.25, 'Customer Segmentation sale', 2500, 'Cancelled', 50, 3, 3)
+    INTO Sale VALUES(4, TO_DATE('31/8/2022', 'DD/MM/YYYY'), '8200', TO_TIMESTAMP('2023-09-20 14:20:00', 'YYYY-MM-DD HH24:MI:SS'), 'BLINK membership', 5.55, 'Online sale', 2000, 'Completed', 30, 4, 4)
+    INTO Sale VALUES(5, TO_DATE('27/3/2023', 'DD/MM/YYYY'), '1000000', TO_TIMESTAMP('2023-10-05 11:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 1.00, 'Loyalty Program sale', 5000, 'Completed', 20, 5, 5)
+    INTO Sale VALUES(6, TO_DATE('5/3/2023', 'DD/MM/YYYY'), '2000', TO_TIMESTAMP('2023-11-15 16:40:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 5.00, 'Product Category sale', 3400, 'Completed', 80, 6, 6)
+    INTO Sale VALUES(7, TO_DATE('1/6/2023', 'DD/MM/YYYY'), '100', TO_TIMESTAMP('2023-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 4.00, 'Product Category sale', 8000, 'Completed', 70, 7, 7)
+    INTO Sale VALUES(8, TO_DATE('20/3/2023', 'DD/MM/YYYY'), '200', TO_TIMESTAMP('2024-01-10 13:25:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 6.25, 'Year-over-Year sale', 30000, 'Completed', 67, 8, 8)
+    INTO Sale VALUES (9, TO_DATE('12/12/2022', 'DD/MM/YYYY'), '1000000', TO_TIMESTAMP('2024-02-20 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 1.30, 'Loyalty Program sale', 50000, 'Completed', 87, 9, 9)
+    INTO Sale VALUES(10, TO_DATE('11/11/2022', 'DD/MM/YYYY'), '5200', TO_TIMESTAMP('2024-03-05 14:50:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 5.50, 'Daily Sale', 5000, 'Completed', 93, 10, 10)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Delivery VALUES (1, DATE '2023-05-09', TIMESTAMP '2023-05-09 17:50:00', 'Foodpanda', DATE '2023-05-09', 'Tell me when arrive', 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '010-3156915', 1, 1, 1, 1,1)
+    INTO Delivery VALUES (2, DATE '2023-05-11', TIMESTAMP '2023-05-11 13:15:00', 'GrabFood', DATE '2023-05-11', 'Put in the security guard', 'Coffee Tin', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Pending', '010-2190196', 2, 2, 2, 2,2)
+    INTO Delivery VALUES (3, DATE '2023-05-12', TIMESTAMP '2023-05-12 12:45:00', 'Foodpanda', DATE '2023-05-12', null, 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '016-5023086', 3, 3, 3, 3,3)
+    INTO Delivery VALUES (4, DATE '2023-05-23', TIMESTAMP '2023-05-23 15:25:00', 'ShoppeeFood', DATE '2023-05-23', 'Tell me when arrive', 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '013-4934856', 4, 4, 4, 4,4)
+    INTO Delivery VALUES (5, DATE '2023-05-14', TIMESTAMP '2023-05-14 17:50:00', 'GrabFood', DATE '2023-05-14', null, 'Coffee Tin', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Pending', '019-5617895', 5, 5, 5, 5,5)
+    INTO Delivery VALUES (6, DATE '2023-05-15', TIMESTAMP '2023-05-15 20:10:00', 'ShoppeeFood', DATE '2023-05-15', null, 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Pending', '018-4684687', 6, 6, 6, 6,6)
+    INTO Delivery VALUES (7, DATE '2023-05-26', TIMESTAMP '2023-05-26 19:30:00', 'Foodpanda', DATE '2023-05-26', 'Put in the security guard', 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '016-4973588', 7, 7, 7, 7,7)
+    INTO Delivery VALUES (8, DATE '2023-05-17', TIMESTAMP '2023-05-17 14:45:00', 'GrabFood', DATE '2023-05-17', null, 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '010-8321015', 8, 8, 8, 8,8)
+    INTO Delivery VALUES (9, DATE '2023-05-08', TIMESTAMP '2023-05-08 21:15:00', 'ShoppeeFood', DATE '2023-05-08', null, 'Coffee Tin', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Completed', '018-4203508', 9, 9, 9, 9,9)
+    INTO Delivery VALUES (10, DATE '2023-05-19', TIMESTAMP '2023-05-19 20:00:00', 'GrabFood', DATE '2023-05-19', null, 'Eco-Friendly', 'Refund Policy, Incorrect Order Policy, Customer Satisfaction Guarantee', 'Pending', '010-5023648', 10, 10, 10, 10,10)
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO "Transaction" VALUES (1, TIMESTAMP '2023-01-06 13:00:00', 'Wholesale', 'RM', '450040164041', '649201373018', 'Credit card', 'Completed', 1, 30000, 1, 1, 1, 1, 1,1)
+    INTO "Transaction" VALUES (2, TIMESTAMP '2023-01-28 08:30:00', 'Purchase', 'RM', '140067845102', '3764819027', 'Credit card', 'Completed', 0.5, 2000, 2, 2, 2, 2, 2,2)
+    INTO "Transaction" VALUES (3, TIMESTAMP '2023-03-03 15:00:00', 'Dropshipping', 'RM', '130440480416', '92710932730', 'Debit card', 'Completed', 2, 7, 3, 3, 3, 3, 3,3)
+    INTO "Transaction" VALUES (4, TIMESTAMP '2023-02-15 12:00:00', 'Wholesale', 'RM', '548412680047', '1087283702', 'Credit card', 'Completed', 1.5, 11, 4, 4, 4, 4, 4,4)
+    INTO "Transaction" VALUES (5, TIMESTAMP '2023-02-25 11:45:00', 'Wholesale', 'RM', '650000489814', '10381981363', 'Debit card', 'Completed', 3, 20, 5, 5, 5, 5, 5,5)
+    INTO "Transaction" VALUES (6, TIMESTAMP '2023-03-04 16:00:00', 'Stock', 'RM', '234044000117', '198320827', 'Debit card', 'Completed', 2.5, 4000, 6, 6, 6, 6, 6,6)
+    INTO "Transaction" VALUES (7, TIMESTAMP '2023-03-16 10:20:00', 'Purchase', 'RM', '590000970707', '1893626392', 'Debit card', 'Completed', 6, 35, 7, 7, 7, 7, 7,7)
+    INTO "Transaction" VALUES (8, TIMESTAMP '2023-04-10 14:00:00', 'Dropshipping', 'RM', '866840100134', '1093728482', 'Islamic banking', 'Completed', 6, 300, 8, 8, 8, 8, 8,8)
+    INTO "Transaction" VALUES (9, TIMESTAMP '2023-05-12 09:00:00', 'Stock', 'RM', '785610012105', '1837209371', 'Credit card', 'Pending', 6, 14, 9, 9, 9, 9, 9,9)
+    INTO "Transaction" VALUES (10, TIMESTAMP '2023-05-29 13:00:00', 'Wholesale', 'RM', '567904490001', '19839361276', 'Debit card', 'Pending', 6, 340, 10, 10, 10, 10, 10,10)
+SELECT 1 FROM DUAL;
+
+
+
+
+INSERT ALL
+    INTO "Feedback" VALUES (1, 'A Flawless Coffee Experience: Superb Taste and Exceptional Service', TO_DATE('4/25/2022', 'MM/DD/YYYY'), 'Absolutely Amazing Coffee! The flavors are rich and distinct. The ordering process was seamless, and my order arrived on time. I''m a happy customer!', 5, 'Received', 'Thank you for your feedback!', 'General feedback', 'Online', 'https://example.com/feedback/image1.jpg', 1, 1, 1, 1, 1, 1)
+    INTO "Feedback" VALUES (2, 'Disappointed with the Coffee Quality: Lacked Flavor and Freshness', TO_DATE('15/7/2019', 'DD/MM/YYYY'), 'Disappointed with the coffee quality. It lacked the promised flavor profile and freshness. I expected better based on the company''s reputation.', 3, 'Under consideration', 'We apologize for the inconvenience you experienced.', 'Product Quality', 'Online', 'https://example.com/feedback/image2.jpg', 2, 2, 2, 2, 2, 2)
+    INTO "Feedback" VALUES (3, 'Delighted with Every Sip: Perfectly Brewed Coffee Delivered with Care', TO_DATE('21/1/2022', 'DD/MM/YYYY'), 'I''m thrilled with the coffee subscription service. Every month, I receive a selection of unique and delicious coffees. It''s a delightful surprise, and the quality is consistently excellent.', 4, 'Closed', 'Thank you for taking the time to provide feedback.', 'Service experience', 'Online', 'https://example.com/feedback/image3.jpg', 3, 3, 3, 3, 3, 3)
+    INTO "Feedback" VALUES (4, 'Exceeded Expectations: Rich Flavor, Timely Delivery, and Excellent Packaging', TO_DATE('31/12/2021', 'DD/MM/YYYY'), 'Kudos to the customer support team! They promptly resolved an issue with my order and provided exceptional service. The coffee itself is outstanding, and I highly recommend this company.', 5, 'Escalated', 'Thank you for your feedback!', 'Product Quality', 'Mail', 'https://example.com/feedback/image4.jpg', 4, 4, 4, 4, 4, 4)
+    INTO "Feedback" VALUES (5, 'Delayed Delivery and Damaged Packaging: A Frustrating Experience', TO_DATE('5/3/2023', 'DD/MM/YYYY'), 'The order arrived late, and the packaging was damaged. The customer service response was slow, and the overall experience was disappointing.', 2, 'Resolved', 'We apologize for the delay in service.', 'Waiting time', 'Online', 'https://example.com/feedback/image5.jpg', 5, 5, 5, 5, 5, 5)
+    INTO "Feedback" VALUES (6, 'Inaccurate Order: Received the Wrong Coffee Blend', TO_DATE('4/6/2023', 'DD/MM/YYYY'), 'Received the wrong coffee blend in my order. The error caused inconvenience, and it took several attempts to get in touch with customer support for resolution.', 3, 'Closed', 'Thank you for bringing this matter to our attention.', 'Service experience', 'Physical', 'https://example.com/feedback/image6.jpg', 6, 6, 6, 6, 6, 6)
+    INTO "Feedback" VALUES (7, 'Coffee Bliss: Unforgettable Aroma and Smooth Customer Experience', TO_DATE('8/7/2021', 'DD/MM/YYYY'), 'I''m impressed with the eco-friendly packaging used for my coffee order. The company''s commitment to sustainability is commendable, and the coffee tastes fantastic!', 4.5, 'Closed', 'Thank you for taking the time to provide feedback.', 'General feedback', 'Online', 'https://example.com/feedback/image7.jpg', 7, 7, 7, 7, 7, 7)
+    INTO "Feedback" VALUES (8, 'Unresponsive Customer Support: Poor Communication and Issue Resolution', TO_DATE('11/22/2019', 'MM/DD/YYYY'), 'Overpriced for the quality received. The coffee didn''t meet my expectations in terms of taste and value. I won''t be ordering again.', 3.5, 'In progress', 'We''re sorry that our product did not meet your expectations.', 'Service experience', 'Online', 'https://example.com/feedback/image8.jpg', 8, 8, 8, 8, 8, 8)
+    INTO "Feedback" VALUES (9, 'Subpar Taste and Overpriced: Not Worth the Hype or Expense', TO_DATE('9/18/2022', 'MM/DD/YYYY'), 'The customer support team was unhelpful and unresponsive. I encountered an issue with my order and struggled to get assistance. The lack of communication was frustrating.', 1, 'Escalated', 'We apologize for the misunderstanding and any inconvenience caused.', 'Pricing and value for money', 'Online', 'https://example.com/feedback/image9.jpg', 9, 9, 9, 9, 9, 9)
+    INTO "Feedback" VALUES (10, 'A Coffee Lover''s Paradise: Outstanding Quality and Seamless Ordering Process', TO_DATE('4/13/2021', 'MM/DD/YYYY'), 'The coffee arrived fresh, and the aroma was captivating. The packaging was visually appealing, and the taste surpassed my expectations. This is my new go-to coffee brand!', 4.5, 'Closed', 'We''re glad to hear that you enjoyed your visit to our coffee shop!', 'General feedback', 'Mail', 'https://example.com/feedback/image10.jpg', 10, 10, 10, 10, 10, 10)
+SELECT * FROM DUAL;
+
+
+
+
