@@ -1150,6 +1150,435 @@ INSERT ALL
     INTO "Feedback" VALUES (10, 'A Coffee Lover''s Paradise: Outstanding Quality and Seamless Ordering Process', TO_DATE('4/13/2021', 'MM/DD/YYYY'), 'The coffee arrived fresh, and the aroma was captivating. The packaging was visually appealing, and the taste surpassed my expectations. This is my new go-to coffee brand!', 4.5, 'Closed', 'We''re glad to hear that you enjoyed your visit to our coffee shop!', 'General feedback', 'Mail', 'https://example.com/feedback/image10.jpg', 10, 10, 10, 10, 10, 10)
 SELECT * FROM DUAL;
 
+--data for EXPLOSION
 
+
+INSERT ALL
+    INTO Address_Person VALUES ('wanemir69@gmail.com', 1)
+    INTO Address_Person VALUES ('aminah08@gmail.com', 2)
+    INTO Address_Person VALUES ('harris89@gmail.com', 3)
+    INTO Address_Person VALUES ('zariff13@gmail.com', 20)
+    INTO Address_Person VALUES ('nayli47@gmail.com', 5)
+    INTO Address_Person VALUES ('zulamzar43@gmail.com', 6)
+    INTO Address_Person VALUES ('chua45@gmail.com', 4)
+    INTO Address_Person VALUES ('jarinah12@gmail.com', 7)
+    INTO Address_Person VALUES ('adamfeb28@gmail.com', 8)
+    INTO Address_Person VALUES ('fasya51@gmail.com', 9)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Customer_Product VALUES (1, 4)
+    INTO Customer_Product VALUES (2, 1)
+    INTO Customer_Product VALUES (3, 8)
+    INTO Customer_Product VALUES (3, 7)
+    INTO Customer_Product VALUES (4, 10)
+    INTO Customer_Product VALUES (5, 2)
+    INTO Customer_Product VALUES (5, 8)
+    INTO Customer_Product VALUES (7, 9)
+    INTO Customer_Product VALUES (9, 9)
+    INTO Customer_Product VALUES (10, 3)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Customer_Sale VALUES (1, 7)
+    INTO Customer_Sale VALUES (2, 3)
+    INTO Customer_Sale VALUES (5, 6)
+    INTO Customer_Sale VALUES (5, 8)
+    INTO Customer_Sale VALUES (5, 1)
+    INTO Customer_Sale VALUES (7, 7)
+    INTO Customer_Sale VALUES (8, 10)
+    INTO Customer_Sale VALUES (8, 2)
+    INTO Customer_Sale VALUES (9, 5)
+    INTO Customer_Sale VALUES (10, 9)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Product_Sale VALUES (1, 6)
+    INTO Product_Sale VALUES (2, 3)
+    INTO Product_Sale VALUES (3, 10)
+    INTO Product_Sale VALUES (4, 7)
+    INTO Product_Sale VALUES (7, 9)
+    INTO Product_Sale VALUES (7, 1)
+    INTO Product_Sale VALUES (8, 5)
+    INTO Product_Sale VALUES (8, 3)
+    INTO Product_Sale VALUES (9, 2)
+    INTO Product_Sale VALUES (10, 1)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL 
+    INTO Employee_Supplier VALUES (1, 3)
+    INTO Employee_Supplier VALUES (2, 5)
+    INTO Employee_Supplier VALUES (3, 5)
+    INTO Employee_Supplier VALUES (5, 3)
+    INTO Employee_Supplier VALUES (5, 7)
+    INTO Employee_Supplier VALUES (7, 9)
+    INTO Employee_Supplier VALUES (8, 1)
+    INTO Employee_Supplier VALUES (8, 10)
+    INTO Employee_Supplier VALUES (9, 2)
+    INTO Employee_Supplier VALUES (10, 7)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Employee_Vehicle VALUES (2, 1)
+    INTO Employee_Vehicle VALUES (3, 1)
+    INTO Employee_Vehicle VALUES (4, 8)
+    INTO Employee_Vehicle VALUES (5, 4)
+    INTO Employee_Vehicle VALUES (5, 10)
+    INTO Employee_Vehicle VALUES (6, 1)
+    INTO Employee_Vehicle VALUES (7, 9)
+    INTO Employee_Vehicle VALUES (8, 3)
+    INTO Employee_Vehicle VALUES (9, 5)
+    INTO Employee_Vehicle VALUES (10, 9)
+SELECT 1 FROM DUAL;
+
+INSERT ALL 
+    INTO Employee_Item VALUES (1, 15)
+    INTO Employee_Item VALUES (2, 18)
+    INTO Employee_Item VALUES (3, 8)
+    INTO Employee_Item VALUES (4, 11)
+    INTO Employee_Item VALUES (6, 1)
+    INTO Employee_Item VALUES (7, 15)
+    INTO Employee_Item VALUES (7, 8)
+    INTO Employee_Item VALUES (8, 19)
+    INTO Employee_Item VALUES (9, 7)
+    INTO Employee_Item VALUES (10, 20)
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO Employee_Product VALUES (1, 10)
+    INTO Employee_Product VALUES (1, 9)
+    INTO Employee_Product VALUES (3, 5)
+    INTO Employee_Product VALUES (4, 2)
+    INTO Employee_Product VALUES (4, 4)
+    INTO Employee_Product VALUES (5, 7)
+    INTO Employee_Product VALUES (8, 10)
+    INTO Employee_Product VALUES (8, 5)
+    INTO Employee_Product VALUES (9, 1)
+    INTO Employee_Product VALUES (10, 3)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Employee_MarketingProgram VALUES (3, 1)
+    INTO Employee_MarketingProgram VALUES (5, 5)
+    INTO Employee_MarketingProgram VALUES (6, 10)
+    INTO Employee_MarketingProgram VALUES (10, 9)
+    INTO Employee_MarketingProgram VALUES (4, 7)
+    INTO Employee_MarketingProgram VALUES (6, 8)
+    INTO Employee_MarketingProgram VALUES (8, 1)
+    INTO Employee_MarketingProgram VALUES (4, 5)
+    INTO Employee_MarketingProgram VALUES (3, 3)
+    INTO Employee_MarketingProgram VALUES (1, 10)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Employee_Recipe VALUES (1, 8)
+    INTO Employee_Recipe VALUES (1, 7)
+    INTO Employee_Recipe VALUES (3, 10)
+    INTO Employee_Recipe VALUES (4, 5)
+    INTO Employee_Recipe VALUES (5, 9)
+    INTO Employee_Recipe VALUES (5, 6)
+    INTO Employee_Recipe VALUES (8, 1)
+    INTO Employee_Recipe VALUES (9, 4)
+    INTO Employee_Recipe VALUES (10, 4)
+    INTO Employee_Recipe VALUES (10, 3)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Employee_Training VALUES (1, 8)
+    INTO Employee_Training VALUES (3, 10)
+    INTO Employee_Training VALUES (4, 1)
+    INTO Employee_Training VALUES (5, 4)
+    INTO Employee_Training VALUES (5, 2)
+    INTO Employee_Training VALUES (6, 2)
+    INTO Employee_Training VALUES (7, 6)
+    INTO Employee_Training VALUES (7, 9)
+    INTO Employee_Training VALUES (9, 1)
+    INTO Employee_Training VALUES (10, 10)
+SELECT 1 FROM DUAL;
+
+
+
+INSERT ALL
+    INTO Department_Branch VALUES (1, 3)
+    INTO Department_Branch VALUES (1, 2)
+    INTO Department_Branch VALUES (2, 9)
+    INTO Department_Branch VALUES (4, 5)
+    INTO Department_Branch VALUES (5, 2)
+    INTO Department_Branch VALUES (6, 1)
+    INTO Department_Branch VALUES (7, 10)
+    INTO Department_Branch VALUES (9, 5)
+    INTO Department_Branch VALUES (9, 10)
+    INTO Department_Branch VALUES (10, 4)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Promotion_Branch VALUES (1, 4)
+    INTO Promotion_Branch VALUES (2, 9)
+    INTO Promotion_Branch VALUES (2, 6)
+    INTO Promotion_Branch VALUES (3, 7)
+    INTO Promotion_Branch VALUES (3, 1)
+    INTO Promotion_Branch VALUES (4, 4)
+    INTO Promotion_Branch VALUES (4, 9)
+    INTO Promotion_Branch VALUES (5, 10)
+    INTO Promotion_Branch VALUES (8, 2)
+    INTO Promotion_Branch VALUES (9, 5)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO MarketingProgram_Branch VALUES (1, 4)
+    INTO MarketingProgram_Branch VALUES (1, 5)
+    INTO MarketingProgram_Branch VALUES (2, 6)
+    INTO MarketingProgram_Branch VALUES (3, 4)
+    INTO MarketingProgram_Branch VALUES (4, 9)
+    INTO MarketingProgram_Branch VALUES (4, 2)
+    INTO MarketingProgram_Branch VALUES (7, 10)
+    INTO MarketingProgram_Branch VALUES (8, 3)
+    INTO MarketingProgram_Branch VALUES (8, 10)
+    INTO MarketingProgram_Branch VALUES (10, 8)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Promotion_Product VALUES (1, 6)
+    INTO Promotion_Product VALUES (3, 1)
+    INTO Promotion_Product VALUES (3, 5)
+    INTO Promotion_Product VALUES (4, 10)
+    INTO Promotion_Product VALUES (4, 8)
+    INTO Promotion_Product VALUES (5, 3)
+    INTO Promotion_Product VALUES (5, 4)
+    INTO Promotion_Product VALUES (7, 2)
+    INTO Promotion_Product VALUES (10, 4)
+    INTO Promotion_Product VALUES (10, 6)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Vehicle_Transaction VALUES (1, 10)
+    INTO Vehicle_Transaction VALUES (2, 1)
+    INTO Vehicle_Transaction VALUES (3, 6)
+    INTO Vehicle_Transaction VALUES (4, 5)
+    INTO Vehicle_Transaction VALUES (5, 7)
+    INTO Vehicle_Transaction VALUES (7, 4)
+    INTO Vehicle_Transaction VALUES (8, 3)
+    INTO Vehicle_Transaction VALUES (8, 2)
+    INTO Vehicle_Transaction VALUES (9, 3)
+    INTO Vehicle_Transaction VALUES (10, 8)
+SELECT 1 FROM DUAL;
+
+INSERT ALL
+    INTO RawMaterial_Recipe VALUES (1, 4)
+    INTO RawMaterial_Recipe VALUES (2, 3)
+    INTO RawMaterial_Recipe VALUES (4, 7)
+    INTO RawMaterial_Recipe VALUES (4, 10)
+    INTO RawMaterial_Recipe VALUES (4, 8)
+    INTO RawMaterial_Recipe VALUES (5, 6)
+    INTO RawMaterial_Recipe VALUES (7, 9)
+    INTO RawMaterial_Recipe VALUES (8, 6)
+    INTO RawMaterial_Recipe VALUES (9, 1)
+    INTO RawMaterial_Recipe VALUES (10, 5)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Inventory_Supplier VALUES (1, 9)
+    INTO Inventory_Supplier VALUES (2, 4)
+    INTO Inventory_Supplier VALUES (3, 1)
+    INTO Inventory_Supplier VALUES (3, 8)
+    INTO Inventory_Supplier VALUES (4, 7)
+    INTO Inventory_Supplier VALUES (6, 4)
+    INTO Inventory_Supplier VALUES (7, 5)
+    INTO Inventory_Supplier VALUES (8, 6)
+    INTO Inventory_Supplier VALUES (10, 6)
+    INTO Inventory_Supplier VALUES (10, 3)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Inventory_Shipment VALUES (1, 10)
+    INTO Inventory_Shipment VALUES (1, 4)
+    INTO Inventory_Shipment VALUES (2, 9)
+    INTO Inventory_Shipment VALUES (3, 1)
+    INTO Inventory_Shipment VALUES (4, 5)
+    INTO Inventory_Shipment VALUES (4, 8)
+    INTO Inventory_Shipment VALUES (5, 2)
+    INTO Inventory_Shipment VALUES (6, 4)
+    INTO Inventory_Shipment VALUES (8, 6)
+    INTO Inventory_Shipment VALUES (10, 2)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Inventory_Vehicle VALUES (1, 6)
+    INTO Inventory_Vehicle VALUES (1, 2)
+    INTO Inventory_Vehicle VALUES (2, 4)
+    INTO Inventory_Vehicle VALUES (2, 7)
+    INTO Inventory_Vehicle VALUES (5, 8)
+    INTO Inventory_Vehicle VALUES (6, 1)
+    INTO Inventory_Vehicle VALUES (8, 10)
+    INTO Inventory_Vehicle VALUES (9, 8)
+    INTO Inventory_Vehicle VALUES (10, 6)
+    INTO Inventory_Vehicle VALUES (10, 5)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Delivery_Item VALUES (1, 10)
+    INTO Delivery_Item VALUES (2, 13)
+    INTO Delivery_Item VALUES (2, 2)
+    INTO Delivery_Item VALUES (3, 19)
+    INTO Delivery_Item VALUES (5, 1)
+    INTO Delivery_Item VALUES (6, 5)
+    INTO Delivery_Item VALUES (7, 15)
+    INTO Delivery_Item VALUES (7, 16)
+    INTO Delivery_Item VALUES (9, 14)
+    INTO Delivery_Item VALUES (10, 16)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Inventory_Sale VALUES (1, 5)
+    INTO Inventory_Sale VALUES (2, 6)
+    INTO Inventory_Sale VALUES (3, 10)
+    INTO Inventory_Sale VALUES (4, 4)
+    INTO Inventory_Sale VALUES (4, 7)
+    INTO Inventory_Sale VALUES (5, 2)
+    INTO Inventory_Sale VALUES (6, 3)
+    INTO Inventory_Sale VALUES (9, 5)
+    INTO Inventory_Sale VALUES (10, 10)
+    INTO Inventory_Sale VALUES (10, 1)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Item_Transaction VALUES (1, 7)
+    INTO Item_Transaction VALUES (1, 3)
+    INTO Item_Transaction VALUES (3, 10)
+    INTO Item_Transaction VALUES (4, 2)
+    INTO Item_Transaction VALUES (11, 8)
+    INTO Item_Transaction VALUES (11, 4)
+    INTO Item_Transaction VALUES (15, 9)
+    INTO Item_Transaction VALUES (16, 1)
+    INTO Item_Transaction VALUES (19, 3)
+    INTO Item_Transaction VALUES (20, 8)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Address_Branch VALUES (2, 3)
+    INTO Address_Branch VALUES (5, 6)
+    INTO Address_Branch VALUES (5, 2)
+    INTO Address_Branch VALUES (6, 4)
+    INTO Address_Branch VALUES (10, 7)
+    INTO Address_Branch VALUES (10, 1)
+    INTO Address_Branch VALUES (16, 7)
+    INTO Address_Branch VALUES (17, 10)
+    INTO Address_Branch VALUES (19, 8)
+    INTO Address_Branch VALUES (20, 10)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Address_Supplier VALUES (1, 1)
+    INTO Address_Supplier VALUES (2, 3)
+    INTO Address_Supplier VALUES (2, 9)
+    INTO Address_Supplier VALUES (4, 10)
+    INTO Address_Supplier VALUES (6, 10)
+    INTO Address_Supplier VALUES (10, 4)
+    INTO Address_Supplier VALUES (12, 5)
+    INTO Address_Supplier VALUES (13, 8)
+    INTO Address_Supplier VALUES (17, 5)
+    INTO Address_Supplier VALUES (17, 1)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Address_Inventory VALUES (1, 5)
+    INTO Address_Inventory VALUES (2, 4)
+    INTO Address_Inventory VALUES (4, 4)
+    INTO Address_Inventory VALUES (8, 8)
+    INTO Address_Inventory VALUES (10, 1)
+    INTO Address_Inventory VALUES (10, 6)
+    INTO Address_Inventory VALUES (11, 1)
+    INTO Address_Inventory VALUES (13, 10)
+    INTO Address_Inventory VALUES (15, 2)
+    INTO Address_Inventory VALUES (17, 3)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Applicant_Application VALUES (1, 3)
+    INTO Applicant_Application VALUES (2, 4)
+    INTO Applicant_Application VALUES (3, 10)
+    INTO Applicant_Application VALUES (4, 2)
+    INTO Applicant_Application VALUES (4, 8)
+    INTO Applicant_Application VALUES (5, 7)
+    INTO Applicant_Application VALUES (6, 4)
+    INTO Applicant_Application VALUES (9, 10)
+    INTO Applicant_Application VALUES (10, 1)
+    INTO Applicant_Application VALUES (10, 9)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Delivery_Transaction VALUES (1, 7)
+    INTO Delivery_Transaction VALUES (1, 9)
+    INTO Delivery_Transaction VALUES (3, 8)
+    INTO Delivery_Transaction VALUES (4, 3)
+    INTO Delivery_Transaction VALUES (5, 10)
+    INTO Delivery_Transaction VALUES (6, 3)
+    INTO Delivery_Transaction VALUES (8, 2)
+    INTO Delivery_Transaction VALUES (9, 1)
+    INTO Delivery_Transaction VALUES (10, 4)
+    INTO Delivery_Transaction VALUES (10, 10)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO MarketingProgram_Sale VALUES (1, 1)
+    INTO MarketingProgram_Sale VALUES (1, 9)
+    INTO MarketingProgram_Sale VALUES (2, 10)
+    INTO MarketingProgram_Sale VALUES (4, 2)
+    INTO MarketingProgram_Sale VALUES (5, 5)
+    INTO MarketingProgram_Sale VALUES (5, 10)
+    INTO MarketingProgram_Sale VALUES (6, 3)
+    INTO MarketingProgram_Sale VALUES (6, 4)
+    INTO MarketingProgram_Sale VALUES (7, 4)
+    INTO MarketingProgram_Sale VALUES (7, 6)
+SELECT 1 FROM DUAL;
+
+
+
+INSERT ALL
+    INTO Transaction_Shipment VALUES (1, 10)
+    INTO Transaction_Shipment VALUES (2, 9)
+    INTO Transaction_Shipment VALUES (2, 7)
+    INTO Transaction_Shipment VALUES (4, 4)
+    INTO Transaction_Shipment VALUES (4, 6)
+    INTO Transaction_Shipment VALUES (5, 1)
+    INTO Transaction_Shipment VALUES (6, 4)
+    INTO Transaction_Shipment VALUES (7, 8)
+    INTO Transaction_Shipment VALUES (9, 2)
+    INTO Transaction_Shipment VALUES (10, 1)
+SELECT 1 FROM DUAL;
+
+
+INSERT ALL
+    INTO Procurement_Supplier VALUES (1, 2)
+    INTO Procurement_Supplier VALUES (2, 4)
+    INTO Procurement_Supplier VALUES (3, 3)
+    INTO Procurement_Supplier VALUES (3, 9)
+    INTO Procurement_Supplier VALUES (4, 3)
+    INTO Procurement_Supplier VALUES (6, 5)
+    INTO Procurement_Supplier VALUES (8, 1)
+    INTO Procurement_Supplier VALUES (9, 5)
+    INTO Procurement_Supplier VALUES (10, 1)
+    INTO Procurement_Supplier VALUES (10, 6)
+SELECT 1 FROM DUAL;
 
 
