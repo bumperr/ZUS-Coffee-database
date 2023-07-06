@@ -382,6 +382,7 @@ CREATE TABLE "Transaction" (
   Trans_amount NUMBER,
   Cust_ID INT,
   E_ID INT,
+  Sale_ID INT,
   Promo_ID INT,
   Proc_ID INT,
   S_ID INT,
@@ -459,6 +460,9 @@ CREATE TABLE "Feedback" (
   CONSTRAINT fk_Fdbk_Product FOREIGN KEY (P_ID) REFERENCES Product (P_ID),
   CONSTRAINT fk_Fdbk_Sale FOREIGN KEY (Sale_ID) REFERENCES Sale (Sale_ID)
 );
+
+ALTER TABLE "Transaction"
+ADD CONSTRAINT fk_Trans_Sale FOREIGN KEY (Sale_ID) REFERENCES Sale(Sale_ID);
 
 --Explosion table
 CREATE TABLE Address_Person (
