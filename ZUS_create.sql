@@ -1088,8 +1088,8 @@ INSERT ALL
     INTO Promotion VALUES (5, '40% OFF WITH BonusLink BLINK App', 'Grab your discount with BLINK App', 'Collaboration promo', 'Use BLINK App', 'ZCODE24', 0.1, 'Make a payment using BonusLink App', TO_DATE('01/17/23', 'MM/DD/YY'), TO_DATE('01/18/23', 'MM/DD/YY'), 'Ongoing', 180000, 5, 5, 5)
     INTO Promotion VALUES (6, 'BUY 1 FREE 1', 'Dont let your chance to experience the art of coffee with Zuss', 'Weekly promo', 'Buy drinks more than RM20', 'ZCODE25', 0.5, 'The lowest-price drink will be free', TO_DATE('08/03/21', 'MM/DD/YY'), TO_DATE('08/04/21', 'MM/DD/YY'), 'On-going', 300000, 6, 6, 6)
     INTO Promotion VALUES (7, 'BREKKIE COMBO', 'Take your combos now !', 'Special promo', 'Buy more than RM20', 'ZCODE26', 0.4, 'Applicable for delivery & pickup via ZUS App & foodpanda only', TO_DATE('12/29/22', 'MM/DD/YY'), TO_DATE('12/30/22', 'MM/DD/YY'), 'Ongoing', 150000, 7, 7, 7)
-    INTO Promotion VALUES (8, 'RAMADAN SWEET DEAL', 'Start your Ramadan with the sweetness of Zuss Coffee', 'Special day promo', 'Ramadhan mission', 'ZCODE27', 0.15, 'Applicable for selected outlets only', TO_DATE('06/11/23', 'MM/DD/YY'), TO_DATE('06/12/23', 'MM/DD/YY'), 'Finished', 600000, 8, 8, 8)
-    INTO Promotion VALUES (9, 'NEW MEMBER', 'Grab your voucher as the new member of Zuss Coffee now !', 'Special promo', 'Use Zuss Coffee App', 'ZCODE28', 0.2, 'New register for ZUS App', TO_DATE('09/02/21', 'MM/DD/YY'), TO_DATE('09/03/21', 'MM/DD/YY'), 'Ongoing', 450000, 9, 9, 9)
+    INTO Promotion VALUES (8, 'RAMADAN SWEET DEAL', 'Start your Ramadan with the sweetness of Zuss Coffee', 'Special day promo', 'Ramadhan mission', 'ZCODE27', 0.15, 'Applicable for selected outlets only', TO_DATE('06/11/23', 'MM/DD/YY'), TO_DATE('06/12/23', 'MM/DD/YY'), 'Finished', 600000, 8, 8, 10)
+    INTO Promotion VALUES (9, 'NEW MEMBER', 'Grab your voucher as the new member of Zuss Coffee now !', 'Special promo', 'Use Zuss Coffee App', 'ZCODE28', 0.2, 'New register for ZUS App', TO_DATE('09/02/21', 'MM/DD/YY'), TO_DATE('09/03/21', 'MM/DD/YY'), 'Ongoing', 450000, 9, 9, 10)
     INTO Promotion VALUES (10, '11.11 SALE OFFER', 'Get your offer now before it''s too late !', 'Weekly promo', 'Customer Loyalty', 'ZCODE29', 0.1, 'Each user is limited to one(1) time purchase only', TO_DATE('02/21/22', 'MM/DD/YY'), TO_DATE('02/22/22', 'MM/DD/YY'), 'Planning', 190000, 10, 10, 10)
 SELECT 1 FROM DUAL;
 
@@ -1102,8 +1102,8 @@ INSERT ALL
     INTO Sale VALUES(5, TO_DATE('27/3/2023', 'DD/MM/YYYY'), '1000000', TO_TIMESTAMP('2023-10-05 11:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 1.00, 'Loyalty Program sale', 5000, 'Completed', 20, 5, 5)
     INTO Sale VALUES(6, TO_DATE('5/3/2023', 'DD/MM/YYYY'), '2000', TO_TIMESTAMP('2023-11-15 16:40:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 5.00, 'Product Category sale', 3400, 'Completed', 80, 6, 6)
     INTO Sale VALUES(7, TO_DATE('1/6/2023', 'DD/MM/YYYY'), '100', TO_TIMESTAMP('2023-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 4.00, 'Product Category sale', 8000, 'Completed', 70, 7, 7)
-    INTO Sale VALUES(8, TO_DATE('20/3/2023', 'DD/MM/YYYY'), '200', TO_TIMESTAMP('2024-01-10 13:25:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 6.25, 'Year-over-Year sale', 30000, 'Completed', 67, 8, 8)
-    INTO Sale VALUES (9, TO_DATE('12/12/2022', 'DD/MM/YYYY'), '1000000', TO_TIMESTAMP('2024-02-20 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 1.30, 'Loyalty Program sale', 50000, 'Completed', 87, 9, 9)
+    INTO Sale VALUES(8, TO_DATE('20/3/2023', 'DD/MM/YYYY'), '200', TO_TIMESTAMP('2024-01-10 13:25:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 6.25, 'Year-over-Year sale', 30000, 'Completed', 67, 10, 8)
+    INTO Sale VALUES (9, TO_DATE('12/12/2022', 'DD/MM/YYYY'), '1000000', TO_TIMESTAMP('2024-02-20 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 1.30, 'Loyalty Program sale', 50000, 'Completed', 87, 10, 9)
     INTO Sale VALUES(10, TO_DATE('11/11/2022', 'DD/MM/YYYY'), '5200', TO_TIMESTAMP('2024-03-05 14:50:00', 'YYYY-MM-DD HH24:MI:SS'), 'Everyone', 5.50, 'Daily Sale', 5000, 'Completed', 93, 10, 10)
 SELECT 1 FROM DUAL;
 
