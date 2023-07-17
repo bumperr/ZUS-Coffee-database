@@ -1581,4 +1581,6 @@ INSERT ALL
     INTO Procurement_Supplier VALUES (10, 6)
 SELECT 1 FROM DUAL;
 
+commit;
+
 
