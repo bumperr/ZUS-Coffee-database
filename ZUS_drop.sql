@@ -590,4 +590,4 @@ EXCEPTION
     END IF;
 END;
 /
-
+commit;
